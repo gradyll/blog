@@ -200,6 +200,30 @@ if(a==1 && a==2 && a==3) {
 2. 原型绑定
 3. 绑定this到这个新对象上
 4. 返回新对象 
+   
+```js
+const New = function {
+  // 创建一个空对象
+  let obj = {};
+  let [constructor,...args] = [...arguments];
+  // 原型绑定
+  obj.__proto__ = constructor.prototype;
+  // 绑定this到这个新对象上
+  let res = constructor.apply(obj,args);
+  // 返回新对象
+  if(res && (typeof (res)=='object'||typeof (res)=='function')){
+		return res;
+	}
+  return res
+}
+
+function Animal() {
+  this.animal = 'Cat'
+}
+
+New(Animal).animal // Cat
+
+```
 
 ### this全解析
 `JavaScript`中的`this`只有如下几种情况，并按他们的优先级从低到高划分如下：
